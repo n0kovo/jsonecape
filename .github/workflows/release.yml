@@ -46,6 +46,27 @@ jobs:
           # Build for Windows AMD64
           GOOS=windows GOARCH=amd64 go build -ldflags="-s -w" -o dist/jsonescape-windows-amd64.exe .
 
+          # Build for Android ARM64
+          GOOS=android GOARCH=arm64 go build -ldflags="-s -w" -o dist/jsonescape-android-arm64 .
+
+          # Build for Android AMD64
+          GOOS=android GOARCH=amd64 go build -ldflags="-s -w" -o dist/jsonescape-android-amd64 .
+
+          # Build for Android 386
+          GOOS=android GOARCH=386 go build -ldflags="-s -w" -o dist/jsonescape-android-386 .
+
+          # Build for FreeBSD AMD64
+          GOOS=freebsd GOARCH=amd64 go build -ldflags="-s -w" -o dist/jsonescape-freebsd-amd64 .
+
+          # Build for FreeBSD ARM64
+          GOOS=freebsd GOARCH=arm64 go build -ldflags="-s -w" -o dist/jsonescape-freebsd-arm64 .
+
+          # Build for OpenBSD AMD64
+          GOOS=openbsd GOARCH=amd64 go build -ldflags="-s -w" -o dist/jsonescape-openbsd-amd64 .
+
+          # Build for OpenBSD ARM64
+          GOOS=openbsd GOARCH=arm64 go build -ldflags="-s -w" -o dist/jsonescape-openbsd-arm64 .
+
       - name: Create archives
         run: |
           cd dist
@@ -55,6 +76,16 @@ jobs:
           tar -czf jsonescape-${{ steps.get_version.outputs.VERSION }}-linux-arm64.tar.gz jsonescape-linux-arm64
           tar -czf jsonescape-${{ steps.get_version.outputs.VERSION }}-darwin-amd64.tar.gz jsonescape-darwin-amd64
           tar -czf jsonescape-${{ steps.get_version.outputs.VERSION }}-darwin-arm64.tar.gz jsonescape-darwin-arm64
+
+          tar -czf jsonescape-${{ steps.get_version.outputs.VERSION }}-android-arm64.tar.gz jsonescape-android-arm64
+          tar -czf jsonescape-${{ steps.get_version.outputs.VERSION }}-android-386.tar.gz jsonescape-android-386
+          tar -czf jsonescape-${{ steps.get_version.outputs.VERSION }}-android-amd64.tar.gz jsonescape-android-amd64
+
+          tar -czf jsonescape-${{ steps.get_version.outputs.VERSION }}-freebsd-amd64.tar.gz jsonescape-freebsd-amd64
+          tar -czf jsonescape-${{ steps.get_version.outputs.VERSION }}-freebsd-arm64.tar.gz jsonescape-freebsd-arm64
+
+          tar -czf jsonescape-${{ steps.get_version.outputs.VERSION }}-openbsd-amd64.tar.gz jsonescape-openbsd-amd64
+          tar -czf jsonescape-${{ steps.get_version.outputs.VERSION }}-openbsd-arm64.tar.gz jsonescape-openbsd-arm64
 
           # Create zip for Windows
           zip jsonescape-${{ steps.get_version.outputs.VERSION }}-windows-amd64.zip jsonescape-windows-amd64.exe
