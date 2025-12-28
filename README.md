@@ -1,6 +1,6 @@
 # jsonescape
 
-A CLI tool for escaping and unescaping JSON strings.
+A simple CLI tool for escaping and unescaping JSON strings.
 
 ## Installation
 
