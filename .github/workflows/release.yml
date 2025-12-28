@@ -39,9 +39,11 @@ jobs:
         env:
           CGO_ENABLED: 0
         run: |
+          export CGO_ENABLED=0
+          
           # Create build directory
           mkdir -p dist
-
+          
           # Build for Linux AMD64
           GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o dist/jsonescape-linux-amd64 .
 
