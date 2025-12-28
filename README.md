@@ -2,20 +2,6 @@
 
 A simple CLI tool for escaping and unescaping JSON strings.
 
-## Installation
-
-```bash
-go install github.com/n0kovo/jsonescape@latest
-```
-
-Or build from source:
-
-```bash
-git clone https://github.com/n0kovo/jsonescape
-cd jsonescape
-go build -o jsonescape .
-```
-
 ## Usage
 
 ```bash
@@ -37,6 +23,20 @@ jsonescape -u 'Hello\nWorld'
 # Wrap output in quotes (useful for inserting into JSON)
 jsonescape -q "some value"
 # Output: "some value"
+```
+
+## Installation
+
+```bash
+go install github.com/n0kovo/jsonescape@latest
+```
+
+Or build from source:
+
+```bash
+git clone https://github.com/n0kovo/jsonescape
+cd jsonescape
+go build -o jsonescape .
 ```
 
 ## Options
