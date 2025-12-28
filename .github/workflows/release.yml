@@ -23,9 +23,17 @@ jobs:
         with:
           go-version: '1.21'
 
-      - name: Get version from tag
+      - name: Get version
         id: get_version
-        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+        shell: bash
+        run: |
+          if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
+            VERSION="${GITHUB_REF#refs/tags/v}"
+          else
+            git fetch --tags
+            VERSION="$(git tag --sort=-v:refname | head -n 1 | sed 's/^v//')"
+          fi
+          echo "VERSION=$VERSION" >> "$GITHUB_OUTPUT"
 
       - name: Build for all platforms
         env:
