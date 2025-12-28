@@ -28,6 +28,8 @@ jobs:
         run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
 
       - name: Build for all platforms
+        env:
+          CGO_ENABLED: 0
         run: |
           # Create build directory
           mkdir -p dist
