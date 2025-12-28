@@ -36,49 +36,31 @@ jobs:
           echo "VERSION=$VERSION" >> "$GITHUB_OUTPUT"
 
       - name: Build for all platforms
-        env:
-          CGO_ENABLED: 0
         run: |
-          export CGO_ENABLED=0
-          
-          # Create build directory
           mkdir -p dist
+      
+          build() {
+            CGO_ENABLED=0 GOOS=$1 GOARCH=$2 \
+            go build -tags netgo,osusergo -ldflags="-s -w" -o "$3" .
+          }
+      
+          build linux   amd64 dist/jsonescape-linux-amd64
+          build linux   arm64 dist/jsonescape-linux-arm64
           
-          # Build for Linux AMD64
-          GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o dist/jsonescape-linux-amd64 .
-
-          # Build for Linux ARM64
-          GOOS=linux GOARCH=arm64 go build -ldflags="-s -w" -o dist/jsonescape-linux-arm64 .
-
-          # Build for macOS AMD64 (Intel)
-          GOOS=darwin GOARCH=amd64 go build -ldflags="-s -w" -o dist/jsonescape-darwin-amd64 .
-
-          # Build for macOS ARM64 (Apple Silicon)
-          GOOS=darwin GOARCH=arm64 go build -ldflags="-s -w" -o dist/jsonescape-darwin-arm64 .
-
-          # Build for Windows AMD64
-          GOOS=windows GOARCH=amd64 go build -ldflags="-s -w" -o dist/jsonescape-windows-amd64.exe .
-
-          # Build for Android ARM64
-          GOOS=android GOARCH=arm64 go build -ldflags="-s -w" -o dist/jsonescape-android-arm64 .
-
-          # Build for Android AMD64
-          GOOS=android GOARCH=amd64 go build -ldflags="-s -w" -o dist/jsonescape-android-amd64 .
-
-          # Build for Android 386
-          GOOS=android GOARCH=386 go build -ldflags="-s -w" -o dist/jsonescape-android-386 .
-
-          # Build for FreeBSD AMD64
-          GOOS=freebsd GOARCH=amd64 go build -ldflags="-s -w" -o dist/jsonescape-freebsd-amd64 .
-
-          # Build for FreeBSD ARM64
-          GOOS=freebsd GOARCH=arm64 go build -ldflags="-s -w" -o dist/jsonescape-freebsd-arm64 .
-
-          # Build for OpenBSD AMD64
-          GOOS=openbsd GOARCH=amd64 go build -ldflags="-s -w" -o dist/jsonescape-openbsd-amd64 .
-
-          # Build for OpenBSD ARM64
-          GOOS=openbsd GOARCH=arm64 go build -ldflags="-s -w" -o dist/jsonescape-openbsd-arm64 .
+          build darwin  amd64 dist/jsonescape-darwin-amd64
+          build darwin  arm64 dist/jsonescape-darwin-arm64
+          
+          build android arm64 dist/jsonescape-android-arm64
+          build android amd64 dist/jsonescape-android-amd64
+          build android 386   dist/jsonescape-android-386
+          
+          build freebsd amd64 dist/jsonescape-freebsd-amd64
+          build freebsd arm64 dist/jsonescape-freebsd-arm64
+          
+          build openbsd amd64 dist/jsonescape-openbsd-amd64
+          build openbsd arm64 dist/jsonescape-openbsd-arm64
+          
+          build windows amd64 dist/jsonescape-windows-amd64.exe
 
       - name: Create archives
         run: |
